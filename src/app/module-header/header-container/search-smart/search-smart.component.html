@@ -1,0 +1,33 @@
+<div>
+  
+  <!-- <app-search-dummy (childEvent)="onReceiving($event)"></app-search-dummy>
+  <p>{{moviesList.results[0].title}}</p> -->
+  <app-search-dummy (childEvent)="recieveEvent($event)"></app-search-dummy>
+  <div *ngIf="movies">
+   <!-- <h4>SEARCH RESULTS</h4> -->
+   <div class="card col-md-4" *ngFor="let movie of movies ">
+       <div class="card-block">
+           <mat-card>
+               <mat-card-header>
+                <mat-card-title>Title : {{ movie.title }}</mat-card-title>
+                
+                
+                <img src="https:/image.tmdb.org/t/p/w185/{{movie.poster_path}}" alt="image not found">
+                </mat-card-header>
+                <mat-card-content>
+                        <p>Rating : {{movie.vote_average}} {{errorMsg}}</p>
+                        <p>No of Votes : {{movie.vote_count}} {{errorMsg}}</p>
+                        <p>Overview : {{movie.overview}}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                        <button class="mat-button" mat-button>ADD TO WISHLIST</button>
+                        <button  class="mat-button" mat-button>GET ALL MOVIES</button>
+                       
+                </mat-card-actions>
+                
+
+            </mat-card>
+       </div>
+   </div>
+</div>
+</div>
