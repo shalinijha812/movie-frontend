@@ -1,0 +1,26 @@
+<div *ngIf="movies"> 
+    
+    <div class="card col-md-4" *ngFor="let movie of movies ">
+        <div class="card-block">
+            <mat-card>
+                <mat-card-header>
+                 <mat-card-title>Title : {{ movie.title }}</mat-card-title>
+                 
+                 
+                 <img src="{{movie.poster_path}}" alt="image not found">
+                 </mat-card-header>
+                 <mat-card-content>
+                         <p>Overview : {{movie.comments}}</p>
+    
+                 </mat-card-content>
+                 <mat-card-actions>
+                    <button mat-button (click)="updateM(movie.id,movie.title)">update</button>
+                    <router-outlet></router-outlet>
+                    <button mat-button (click)="delete(movie.id)">delete</button> 
+                    <router-outlet></router-outlet>    
+            </mat-card-actions> 
+        </mat-card>
+      </div>
+
+
+

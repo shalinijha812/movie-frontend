@@ -1,6 +1,10 @@
+import { IMovie } from './../../../movieI';
 import { SearchServiceService } from './../../../search-service.service';
 
+
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+//import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-smart',
@@ -8,27 +12,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search-smart.component.css']
 })
 export class SearchSmartComponent implements OnInit {
-  // childToParentData:string;
-  // query="";
 
-  // movieList={results:[{title:""}]};
-
-  // errorMsg;
-  // @Output() sendToHeader =new EventEmitter<string>();
-  // onReceiving(queryFromChild:string){
-  //   this.query=queryFromChild;
-
-  //   this.sendToHeader.emit(this.movieList);
-  //   //console.log(this.query);
-  //   //this.router.navigate(['/search',this.query]);
-
-  //     console.log(this.movieList);
-  // }
-  // ngAfterViewChecked(){
-  //   this.searchService.getMovies(this.query)
-  //     .subscribe(data=>this.movieList=data,
-  //     error=>this.errorMsg=error);
-  // }
   public movies = [];
   constructor(private searchService: SearchServiceService) { }
   movieName = 'Jack Reacher';
@@ -42,14 +26,39 @@ export class SearchSmartComponent implements OnInit {
   }
   setMovies() {
     this.searchService.getMovies(this.query_url).subscribe(data => {
-    this.movies = data.results,
-      error => this.errorMsg = error;
+      this.movies = data.results,
+        error => this.errorMsg = error;
       console.log(this.movies);
     });
 
   }
+  addMovie: IMovie;
+  addToWishlist(movie) {
+    this.addMovie = new IMovie();
+    this.addMovie.id = movie.id;
+    this.addMovie.language = movie.original_language;
+    this.addMovie.comments = movie.overview;
+    this.addMovie.title = movie.title;
+    this.addMovie.poster_path = "https:/image.tmdb.org/t/p/w185/"+movie.poster_path;
 
-  ngOnInit() {
+    this.searchService.addMovie(this.addMovie).subscribe(data => {
+      console.log("successfully added the movie to wishlist");
+      //     this.router.navigate["/wishlist"];
+    });
+
+    }
+
+
+    public urlinitial = "https://api.themoviedb.org/3/movie/upcoming?api_key=04008b7a54e14b1890c6aba85bde3664&query=";
+
+
+    ngOnInit() {
+      this.searchService.getMovies(this.urlinitial).subscribe(data => {
+        this.movies = data.results;
+      })
+
+
+
+    }
+
   }
-
-}
